@@ -1,7 +1,7 @@
 {
   "name": "metrohack2017",
   "version": "1.0.0",
-  "description": "",
+  "description": "The app for metrohacks 2017",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/srilman/MetroHack2017#readme",
   "dependencies": {
+    "airapi": "^0.1.0",
     "express": "^4.15.3"
   }
 }
