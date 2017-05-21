@@ -1,22 +1,17 @@
+var http = require('http');
 var express = require('express');
 var app = express();
 var airbnb = require('airapi');
 var bodyParser = require('body-parser');
-var http = require('http');
+
+var googleMapsClient = require('@google/maps').createClient({
+  key: "AIzaSyD8qDfEL3_E_h6y0-aLzh3OhK3dIIt_RSM"
+});
+
 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-});
-
-
-var googleMapsClient = require('@google/maps').createClient({
-  key: "AIzaSyAeX9R_mrwUMV6w0OlZuHUk2Pd0f04VDm"
-});
-/*
 // Location information
 app.post('/location', function (req, res) {
     var loc = req.body.loc;
@@ -32,38 +27,28 @@ app.post('/location', function (req, res) {
         res.json(ans);
     });
 });
-*/
 
+app.get('/', function (req, res) {
+    res.send("Work");
+});
 
 app.post('/attractions', function (req, res) {
+    console.log("YO");
     var types = req.body.types;
     var lat = req.body.lat;
     var long = req.body.long;
 
-    var pathName = '/maps/api/place/nearbysearch/json?location=' + lat + ',' + long + '&radius=5000&types=' + 
-                types + '&key=AIzaSyBGsNt88N13IZNoK8h9go6EO8_zQm7X3rQ';
-    console.log(pathName);
-
-    var options = { 
-    host: 'maps.googleapis.com',
-    path: pathName
-    }
-    callback = function(response) {
-        // variable that will save the result
-        var result = '';
-
-        // every time you have a new piece of the result
-        response.on('data', function(chunk) {
-            result += chunk;
-        });
-
-        // when you get everything back
-        response.on('end', function() {
-            console.log(result);
-    });
-}
-
-http.request(options, callback).end();
+    googleMapsClient.placesNearby({
+      language: 'en',
+      location: [-33.865, 151.038],
+      radius: 5000,
+      minprice: 1,
+      maxprice: 4,
+      opennow: true,
+      type: 'restaurant'
+  }, function(err, response) {
+      console.log(response);
+  });
 });
 
 
@@ -96,7 +81,14 @@ app.post('/geopaths', function (res, req) {
 });
 
 
-var server = app.listen(9000, function () {
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+});
+
+
+var server = app.listen(3000, function () {
    var host = server.address().address
    var port = server.address().port
 
