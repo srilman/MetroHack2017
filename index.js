@@ -4,7 +4,7 @@ var airbnb = require('airapi');
 var bodyParser = require('body-parser');
 
 var googleMapsClient = require('@google/maps').createClient({
-  key: "AIzaSyAeX9R_mrwUMV6w0OlZuHUk2Pd0f04VDmQ"
+  key: "AIzaSyC8wOuf_7iC_TTrWxdK697DB090Bj-SL1U"
 });
 
 
