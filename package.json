@@ -19,6 +19,7 @@
   "homepage": "https://github.com/srilman/MetroHack2017#readme",
   "dependencies": {
     "airapi": "^0.1.0",
+    "body-parser": "^1.17.2",
     "express": "^4.15.3"
   }
 }
