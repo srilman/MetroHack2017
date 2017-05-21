@@ -1,11 +1,10 @@
-var http = require('http');
 var express = require('express');
 var app = express();
 var airbnb = require('airapi');
 var bodyParser = require('body-parser');
 
 var googleMapsClient = require('@google/maps').createClient({
-  key: "AIzaSyD8qDfEL3_E_h6y0-aLzh3OhK3dIIt_RSM"
+  key: "AIzaSyAeX9R_mrwUMV6w0OlZuHUk2Pd0f04VDmQ"
 });
 
 
@@ -37,18 +36,22 @@ app.post('/attractions', function (req, res) {
     var types = req.body.types;
     var lat = req.body.lat;
     var long = req.body.long;
+    var latlong = [lat, long];
 
     googleMapsClient.placesNearby({
       language: 'en',
-      location: [-33.865, 151.038],
+      location: latlong,
       radius: 5000,
       minprice: 1,
       maxprice: 4,
       opennow: true,
-      type: 'restaurant'
+      type: types
   }, function(err, response) {
-      console.log(response);
+      console.log(response["json"]["results"]);
+      res.json(response["json"]["results"]);
   });
+
+  res.send("What the fudge");
 });
 
 
@@ -84,7 +87,7 @@ app.post('/geopaths', function (res, req) {
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, X-Custom-Headers");
 });
 
 
