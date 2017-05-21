@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/srilman/MetroHack2017#readme",
   "dependencies": {
+    "@google/maps": "^0.3.1",
     "airapi": "^0.1.0",
     "body-parser": "^1.17.2",
     "express": "^4.15.3"
