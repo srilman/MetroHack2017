@@ -67,7 +67,6 @@ app.post('/geopaths', function (res, req) {
     }
 
     for(var m = 0; m < googleList.length; m++){
-        if(m == )
     }
 
 });
